@@ -13,6 +13,43 @@ const config = {
     measurementId: "G-C00513M7DR"
   };
   firebase.initializeApp(config);
+  export const createUserProfileDocument =async(userAuth,additionalData)=>{
+
+    // console.log('UserAuth',userAuth);
+
+     if(!userAuth) return;
+ // console.log('Test Log',firestore.doc('users/1234uggiu'));
+  //  const userRef= firestore.doc('users/1234uggiu');
+  const userRef= firestore.doc(`users/${userAuth.uid}`);
+   const snapShot =await userRef.get();
+  //  console.log('Snapshot',snapShot);
+
+   if( !snapShot.exists){
+     const {displayName,email} =userAuth;
+
+     const createdAt =new Date();
+
+     try{
+
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+
+      });
+
+     }catch(error){
+       console.log('Problematic user',error.message);
+
+     }
+   }
+   return userRef ;
+
+
+  }
+
+  
 
   export const auth = firebase.auth();
   export const firestore = firebase.firestore();
