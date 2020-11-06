@@ -60,7 +60,7 @@ class App extends React.Component{
   }
   render(){
     const {currentUser}=this.state;
-    console.log('State values 666',this.state);
+    // console.log('State values 666',this.state);
     return (
       <div>
         <Header currentUser ={currentUser}/>
