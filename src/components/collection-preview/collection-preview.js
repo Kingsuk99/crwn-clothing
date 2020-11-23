@@ -11,9 +11,12 @@ const CollectionPreview =({title,items})=>(
     ))} */}
 
 {items.filter((item,idx)=>idx<4)
-.map(({id,...otherItemProps})=>(
+// Destructured syntax
+// .map(({id,...otherItemProps})=>(
+    .map(item=>(
         // <div key ={item.id}>{item.name}</div>
-        <CollectionItem key ={id} {...otherItemProps}/>
+        // <CollectionItem key ={id} {...otherItemProps}/>
+        <CollectionItem key ={item.id} item={item}/>
     ))}
 
     </div>
