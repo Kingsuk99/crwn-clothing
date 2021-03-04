@@ -10,10 +10,11 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import {auth,createUserProfileDocument} from './firebase/firebase.utils';
 import { connect } from 'react-redux';
-import {setCurrentUser} from './redux/user/user.actions';
+// import {setCurrentUser} from './redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentuser } from './redux/user/user.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
+import { checkUserSession } from './redux/user/user.actions';
 // import {selectCollectionsForPreview} from './redux/shop/shop.selectors';
 // import  {addCollectionAndDocuments} from './firebase/firebase.utils';
 
@@ -31,47 +32,49 @@ class App extends React.Component{
   unsubscribeFromAuth = null;
 
   componentDidMount(){
-    const {setCurrentUser}=this.props;
+    // const {setCurrentUser}=this.props;
+    const {checkUserSession}=this.props;
+    checkUserSession();
   // this.unsubscribeFromAuth = auth.onAuthStateChanged(user=>{
     // this.unsubscribeFromAuth = auth.onAuthStateChanged( async user=>{
-      this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth=>{
-      // createUserProfileDocument(user);
-      if(userAuth){
-        const userRef =await createUserProfileDocument(userAuth);
+    //   this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth=>{
+    //   // createUserProfileDocument(user);
+    //   if(userAuth){
+    //     const userRef =await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapshot =>{
-          // console.log('Snapshot inside data',snapshot.data())
-          // console.log('Snapshot inside',snapshot)
-          // this.setState({currentUser:{
-          //   id:snapshot.id,
-          //   ...snapshot.data()
-          // }});
+    //     userRef.onSnapshot(snapshot =>{
+    //       // console.log('Snapshot inside data',snapshot.data())
+    //       // console.log('Snapshot inside',snapshot)
+    //       // this.setState({currentUser:{
+    //       //   id:snapshot.id,
+    //       //   ...snapshot.data()
+    //       // }});
 
-          setCurrentUser({
-            id:snapshot.id,
-            ...snapshot.data()
-          });
-
-          
+    //       setCurrentUser({
+    //         id:snapshot.id,
+    //         ...snapshot.data()
+    //       });
 
           
-          // console.log(this.state);
+
+          
+    //       // console.log(this.state);
 
          
-        })
-      }
+    //     })
+    //   }
 
-      // else{
-        // this.setState({currentUser:userAuth});
-        this.props.setCurrentUser(userAuth);
+    //   // else{
+    //     // this.setState({currentUser:userAuth});
+    //     this.props.setCurrentUser(userAuth);
        
-      // }
-      // addCollectionAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
+    //   // }
+    //   // addCollectionAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
       
-      // this.setState({currentUser:user});
-      // console.log('User',user)
+    //   // this.setState({currentUser:user});
+    //   // console.log('User',user)
    
-    })
+    // })
   }
 
   componentWillUnmount(){
@@ -110,7 +113,8 @@ const mapStateToProps=createStructuredSelector({
 });
 const mapDispatchToProps=(dispatch)=>{
   return{
-    setCurrentUser:user =>dispatch(setCurrentUser(user))
+    // setCurrentUser:user =>dispatch(setCurrentUser(user))
+    checkUserSession:()=>dispatch(checkUserSession())
   }
 }
 
