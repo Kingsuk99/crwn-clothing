@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
-import { auth,signInWithGoogle } from '../../firebase/firebase.utils';
+// import { auth,signInWithGoogle } from '../../firebase/firebase.utils';
  import './sign-in.styles.scss';
 import { googleSignInStart,emailSignInStart } from '../../redux/user/user.actions';
 import { connect } from 'react-redux';
 
- class SignIn extends React.Component{
-     state ={
-         email:'',
-         password:''
+//  class SignIn extends React.Component{
+    const SignIn =({emailSignInStart,googleSignInStart})=>{
+    //  state ={
+    //      email:'',
+    //      password:''
 
-     };
-     handleSubmit=async (event)=>{
+    //  };
+   
+    const [userCredentials,setCredentials] =useState({email:'',password:''});
+    const {email,password} =userCredentials;
+     const handleSubmit=async (event)=>{
          event.preventDefault();
-         const {email,password} =this.state;
-         const { emailSignInStart } = this.props;
+        //  const {email,password} =this.state;
+        //  const { emailSignInStart } = this.props;
          emailSignInStart(email, password);
         //  try{
         //    await  auth.signInWithEmailAndPassword(email,password)
@@ -27,19 +31,22 @@ import { connect } from 'react-redux';
         
 
      }
-     handleChange=(event)=>{
+    //  handleChange=(event)=>{
+       const handleChange=(event)=>{
         const {value,name} =event.target;
-        this.setState({[name]:value});
+        // this.setState({[name]:value});
+        setCredentials({...userCredentials,[name]:value})
 
      }
 
-     render(){
-         const {googleSignInStart}=this.props;
+    //  render(){
+        //  const {googleSignInStart}=this.props;
          return(
              <div className='sign-in'>
                    <h2>I already have an account</h2>
                     <span>Sign in with your email and password</span>
-                    <form onSubmit ={this.handleSubmit}>
+                    {/* <form onSubmit ={this.handleSubmit}> */}
+                    <form onSubmit ={handleSubmit}>
                         {/* <input 
                         name ="email" 
                         value ={this.state.email} 
@@ -49,8 +56,10 @@ import { connect } from 'react-redux';
                         /> */}
                            <FormInput 
                         name ="email" 
-                        value ={this.state.email} 
-                        handleChange ={this.handleChange}
+                        // value ={this.state.email} 
+                        value ={email} 
+                        // handleChange ={this.handleChange}
+                        handleChange ={handleChange}
                         type="email" 
                         label ="email"
                         required/>
@@ -65,8 +74,10 @@ import { connect } from 'react-redux';
                         /> */}
                           <FormInput 
                         name ="password" 
-                        value ={this.state.password} 
-                        handleChange ={this.handleChange}
+                        // value ={this.state.password} 
+                        value ={password}
+                        // handleChange ={this.handleChange}
+                        handleChange ={handleChange}
                         type="password" 
                         label ="password"
                         required
@@ -81,7 +92,7 @@ import { connect } from 'react-redux';
                     </form>
              </div>
          );
-     }
+    //  }
 
  }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 // import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
 // import CollectionPage from '../collection/collection.component';
@@ -18,13 +18,17 @@ import CollectionPageContainer from '../collection/collection.container';
 // const CollectionsOverviewWithSpinner=WithSpinner(CollectionsOverview);
 // const CollectionPageWithSpinner =WithSpinner(CollectionPage);
 
-class  ShopPage extends React.Component{
 
+  const  ShopPage =({fetchCollectionsStart,match})=>{
     // state={
     //     loading:true
     // };
+useEffect(()=>{
+  
+  fetchCollectionsStart();
 
-    componentDidMount() {
+},[fetchCollectionsStart]);
+    // componentDidMount() {
         // const { updateCollections } = this.props;
         // const collectionRef = firestore.collection('collections');
     
@@ -37,14 +41,14 @@ class  ShopPage extends React.Component{
         // const {fetchCollectionsStartAsync}=this.props;
         // fetchCollectionsStartAsync();
         /* Switching to sagas*/
-        const { fetchCollectionsStart } = this.props;
+      //   const { fetchCollectionsStart } = this.props;
 
-        fetchCollectionsStart();
-      }
+      //   fetchCollectionsStart();
+      // }
 
-    render(){
+   
         // const {match,isCollectionFetching,selectIsCollectionsLoaded}=this.props;
-        const {match}=this.props;
+        // const {match}=this.props;
         // const {loading}=this.state;
 
         console.log('Match shop',match);
@@ -79,7 +83,7 @@ class  ShopPage extends React.Component{
      </div>
 
         );
-    }
+ 
 
 }
 
